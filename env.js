@@ -59,5 +59,6 @@ global.T = {
 try {
 	global.C = require('./config');
 } catch (error) {
+	L('[Config] Default');
 	global.C = require('./config.default');
 }
