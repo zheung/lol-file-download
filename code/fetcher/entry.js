@@ -1,12 +1,10 @@
 module.exports = async function(channel, solution, cdn) {
-	L('[Version] fetching..');
-	let data = (await Axios.get(_ul.resolve(cdn, `channels/public/${channel}.json`))).data;
+	let entryURL = _ul.resolve(cdn, `channels/public/${channel}.json`);
 
-	L(`[Version] is '${data.version}'`);
+	L(`[Version] fetch from '${entryURL}'`);
+	let { data } = await Axios.get(entryURL, { proxy: C.proxy || undefined });
 
-	let maniURL = data[solution + '_patch_url'];
+	L(`[Version] ${data.version}`);
 
-	L(`[Manifest]'s URL is '${maniURL}'`);
-
-	return [maniURL, data.version];
+	return [data[solution + '_patch_url'], data.version];
 };

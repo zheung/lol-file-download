@@ -1,6 +1,6 @@
 
 module.exports = async function(bundleID, version, cdn) {
-	let bid = bundleID.toString(16).toUpperCase();
+	let bid = ('0000000000000000' + bundleID.toString(16)).slice(-16).toUpperCase();
 
 	let bundleLocal = _pa.join('./temp/bundle', `${version}-${bid}.bundle`);
 	let bundleBuffer;
@@ -11,10 +11,12 @@ module.exports = async function(bundleID, version, cdn) {
 		bundleBuffer = _fs.readFileSync(bundleLocal);
 	}
 	else {
-		L(`[Bundle-${bid}] fetch...`);
-		let bundleBuffer = (await Axios.get(_ul.resolve(cdn, `channels/public/bundles/${bid}.bundle`), { responseType: 'arraybuffer' })).data;
+		let bundleURL = _ul.resolve(cdn, `channels/public/bundles/${bid}.bundle`);
 
-		L(`[Bundle-${bid}] fetched, save at '${bundleLocal}'`);
+		L(`[Bundle-${bid}] fetch from '${bundleURL}'`);
+		let { data: bundleBuffer } = await Axios.get(bundleURL, { responseType: 'arraybuffer', proxy: C.proxy || undefined });
+
+		L(`[Bundle-${bid}] fetched, save at '${bundleLocal}', size ${bundleBuffer.length}`);
 		_fs.writeFileSync(bundleLocal, bundleBuffer);
 	}
 

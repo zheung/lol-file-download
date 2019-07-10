@@ -30,7 +30,7 @@ module.exports = function File(name, fileSize, link, langs, fileChunks) {
 		Fex.removeSync(pathFinal);
 
 		for(let chunk of this.fileChunks) {
-			let bid = chunk.bundleID.toString(16).toUpperCase();
+			let bid = ('0000000000000000'+chunk.bundleID.toString(16)).slice(-16).toUpperCase();
 
 			let parser = Biffer(bundleBuffer[bid]);
 
