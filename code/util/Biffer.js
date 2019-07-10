@@ -1,12 +1,22 @@
 const Struct = require('./Struct');
 
-module.exports = function Biffer(path) {
+module.exports = function Biffer(raw) {
 	if(!(this instanceof Biffer)) {
 		return new Biffer(...arguments);
 	}
 
-	this.path = path;
-	this.buffer = _fs.readFileSync(path);
+	if(raw instanceof Buffer) {
+		this.buffer = raw;
+	}
+	else if(typeof raw == 'string') {
+		this.path = raw;
+
+		this.buffer = _fs.readFileSync(raw);
+	}
+	else {
+		throw `[Biffer] unknown param ${raw}`;
+	}
+
 	this.pos = 0;
 
 	this.unpack = function(format) {

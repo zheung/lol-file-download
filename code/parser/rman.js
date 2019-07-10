@@ -1,7 +1,7 @@
 const Biffer = require('../util/Biffer');
 
-module.exports = async function parseRman(manifest, path) {
-	let parser = Biffer(path);
+module.exports = async function parseRman(manifest, buffer) {
+	let parser = Biffer(buffer);
 
 	let [magic, versionMajor, versionMinor] = parser.unpack('<4sBB');
 
@@ -18,9 +18,7 @@ module.exports = async function parseRman(manifest, path) {
 	_as(flags & (1 << 9));
 	_as(offset == parser.tell());
 
-	let bodyRaw = parser.raw(length);
+	manifest.id = manifestId;
 
-	_fs.writeFileSync('./temp/raw', bodyRaw);
-
-	await new Promise(resolve => Zstd.decompress('./temp/raw', './temp/body', () => resolve()));
+	return await T.unZstd(`./temp/manifest/${manifest.version}-body.manifest`, parser.raw(length), true);
 };

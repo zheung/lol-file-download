@@ -1,8 +1,8 @@
 
 global._fs = require('fs');
 global._pa = require('path');
-global._cr = require('crypto');
 global._as = require('assert');
+global._ul = require('url');
 
 global.Axios = require('axios');
 global.Fex = require('fs-extra');
@@ -16,7 +16,7 @@ global.L = function(...argv) {
 	logs.push(argv.join('\t'));
 };
 
-global.L.end = function(path, text) {
+global.L.end = function(text, path) {
 	if(text) {
 		L('END', text);
 	}
@@ -45,8 +45,13 @@ global.T = {
 
 		return obj;
 	},
+	async unZstd(path, buffer, returnBuffer = false) {
+		_fs.writeFileSync('./temp/zstd', buffer);
 
-	QtoBI({ high, low } = { high: 0, low: 0 }) {
-		return (BigInt(high >>> 0) << BigInt(32)) | BigInt(low >>> 0);
+		await new Promise((resolve, reject) => Zstd.decompress('./temp/zstd', path, err => err ? reject(err) : resolve()));
+
+		if(returnBuffer) {
+			return _fs.readFileSync(path);
+		}
 	}
 };

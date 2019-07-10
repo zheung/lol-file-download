@@ -1,5 +1,3 @@
-const Granola = require('granola');
-
 const Biffer = require('../util/Biffer');
 
 const File = require('../part/File');
@@ -10,8 +8,8 @@ const parseLang = require('./lang');
 const parseFileEntry = require('./fileEntry');
 const parseDirectory = require('./Directory');
 
-module.exports = async function parseBody(manifest) {
-	let parser = Biffer('./temp/body');
+module.exports = async function parseBody(manifest, buffer) {
+	let parser = Biffer(buffer);
 
 	// header (unknown values, skip it)
 	let [n] = parser.unpack('<l');
@@ -72,7 +70,5 @@ module.exports = async function parseBody(manifest) {
 		files[name] = File(name, fileSize, link, langs, fileChunks);
 	}
 
-	// _fs.writeFileSync('./reso/_files.json', Granola.stringify(files));
-
-	return files;
+	manifest.files = files;
 };
