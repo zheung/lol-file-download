@@ -1,6 +1,6 @@
-const Biffer = require('./code/util/Biffer');
+const Biffer = require('../util/Biffer');
 
-let fetchBundle = require('./code/fetcher/bundle');
+let fetchBundle = require('../fetcher/bundle');
 
 module.exports = function File(name, fileSize, link, langs, fileChunks) {
 	if(!(this instanceof File)) {
