@@ -1,0 +1,4 @@
+https://lol.dyn.riotcdn.net/
+https://lol.dyn.riotcdn.net/channels/public/pbe-pbe-win.json
+
+https://lol.dyn.riotcdn.net/channels/public/bundles/BAA9CC9ADF9C647A.bundle
