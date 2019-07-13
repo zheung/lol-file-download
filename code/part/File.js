@@ -14,6 +14,8 @@ module.exports = function File(name, fileSize, link, langs, fileChunks) {
 	this.fileChunks = fileChunks;
 
 	this.extract = async function(version, cdn) {
+		L(`[File] ${this.name}`);
+
 		let bundleIDSet = new Set();
 
 		this.fileChunks.forEach(chunk => bundleIDSet.add(chunk.bundleID));

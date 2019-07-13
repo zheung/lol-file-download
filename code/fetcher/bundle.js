@@ -2,7 +2,7 @@
 module.exports = async function(bundleID, version, cdn) {
 	let bid = ('0000000000000000' + bundleID.toString(16)).slice(-16).toUpperCase();
 
-	let bundleLocal = _pa.join('./temp/bundle', `${version}-${bid}.bundle`);
+	let bundleLocal = _pa.join('./temp/bundle', `${bid}.bundle`);
 	let bundleBuffer;
 
 	if(_fs.existsSync(bundleLocal)) {
