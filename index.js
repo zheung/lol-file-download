@@ -26,7 +26,7 @@ Fex.ensureDirSync('./temp/chunk');
 
 	// Just play it
 	for(let pathFile in manifest.files) {
-		if(pathFile.toLowerCase().indexOf('qiyana.wad'.toLowerCase()) + 1) {
+		if(pathFile.toLowerCase().indexOf('Global.en_US.wad'.toLowerCase()) + 1) {
 			let file = manifest.files[pathFile];
 
 			await file.extract(manifest.version, manifest.cdn);

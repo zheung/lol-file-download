@@ -2,7 +2,7 @@ const Biffer = require('../util/Biffer');
 
 let fetchBundle = require('../fetcher/bundle');
 
-module.exports = function File(name, fileSize, link, langs, fileChunks) {
+module.exports = function File(name, fileSize, link, langs, fileChunks, version) {
 	if(!(this instanceof File)) {
 		return new File(...arguments);
 	}
@@ -12,6 +12,7 @@ module.exports = function File(name, fileSize, link, langs, fileChunks) {
 	this.link = link;
 	this.langs = langs;
 	this.fileChunks = fileChunks;
+	this.version = version;
 
 	this.extract = async function(version, cdn) {
 		L(`[File] ${this.name}`);
@@ -27,12 +28,12 @@ module.exports = function File(name, fileSize, link, langs, fileChunks) {
 			bundleBuffer[bid] = buffer;
 		}
 
-		let pathFinal = _pa.join('./assets/', this.name);
+		let pathFinal = _pa.join('./assets/', String(this.version), this.name);
 
 		Fex.removeSync(pathFinal);
 
 		for(let chunk of this.fileChunks) {
-			let bid = ('0000000000000000'+chunk.bundleID.toString(16)).slice(-16).toUpperCase();
+			let bid = ('0000000000000000' + chunk.bundleID.toString(16)).slice(-16).toUpperCase();
 
 			let parser = Biffer(bundleBuffer[bid]);
 

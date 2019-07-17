@@ -26,7 +26,7 @@ module.exports = async function parseBody(manifest, buffer) {
 	parser.seek(offsets[1]);
 
 	manifest.langs = {};
-	(await parseTable(parser, parseLang)).forEach(lang=> manifest.langs[lang.langID] = lang.lang);
+	(await parseTable(parser, parseLang)).forEach(lang => manifest.langs[lang.langID] = lang.lang);
 
 	// build a list of chunks, indexed by ID
 	manifest.chunks = {};
@@ -67,7 +67,7 @@ module.exports = async function parseBody(manifest, buffer) {
 		let langs = (langIDs || []).map(id => manifest.langs[id]);
 		let fileChunks = (chunkIDs || []).map(id => manifest.chunks[id]);
 
-		files[name] = File(name, fileSize, link, langs, fileChunks);
+		files[name] = File(name, fileSize, link, langs, fileChunks, manifest.version);
 	}
 
 	manifest.files = files;
