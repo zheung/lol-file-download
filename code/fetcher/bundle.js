@@ -14,7 +14,9 @@ module.exports = async function(bundleID, version, cdn) {
 		let bundleURL = _ul.resolve(cdn, `channels/public/bundles/${bid}.bundle`);
 
 		L(`[Bundle-${bid}] fetch from '${bundleURL}'`);
-		let { data: bundleBuffer } = await Axios.get(bundleURL, { responseType: 'arraybuffer', proxy: C.proxy || undefined });
+		let { data } = await Axios.get(bundleURL, { responseType: 'arraybuffer', proxy: C.proxy || undefined });
+
+		bundleBuffer = data;
 
 		L(`[Bundle-${bid}] fetched, save at '${bundleLocal}', size ${bundleBuffer.length}`);
 		_fs.writeFileSync(bundleLocal, bundleBuffer);

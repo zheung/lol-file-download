@@ -9,7 +9,7 @@ module.exports = async function(manifestURL, version) {
 	}
 	else {
 		L(`[Manifest] fetch from '${manifestURL}'`);
-		let maniBuffer = (await Axios.get(manifestURL, { responseType: 'arraybuffer', proxy: C.proxy || undefined })).data;
+		maniBuffer = (await Axios.get(manifestURL, { responseType: 'arraybuffer', proxy: C.proxy || undefined })).data;
 
 		L(`[Manifest] fetched, save at '${maniLocal}', size ${maniBuffer.length}`);
 		_fs.writeFileSync(maniLocal, maniBuffer);

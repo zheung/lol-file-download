@@ -12,7 +12,7 @@ Fex.ensureDirSync('./temp/manifest');
 Fex.ensureDirSync('./temp/bundle');
 Fex.ensureDirSync('./temp/chunk');
 
-(async () => {
+(async function main() {
 	L(`[Channel] ${C.channel} [Solution] ${C.solution} [CDN] ${C.cdn}`);
 
 	let [maniURL, version] = await fetchEntry(C.channel, C.solution, C.cdn);
@@ -26,7 +26,7 @@ Fex.ensureDirSync('./temp/chunk');
 
 	// Just play it
 	for(let pathFile in manifest.files) {
-		if(pathFile.toLowerCase().indexOf('Global.en_US.wad'.toLowerCase()) + 1) {
+		if(pathFile.toLowerCase().indexOf('global.en_us.wad'.toLowerCase()) + 1) {
 			let file = manifest.files[pathFile];
 
 			await file.extract(manifest.version, manifest.cdn);
