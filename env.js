@@ -53,6 +53,16 @@ global.T = {
 		if(returnBuffer) {
 			return _fs.readFileSync(path);
 		}
+	},
+	toHexL(number) {
+		const hex = number.toString(16).toUpperCase();
+
+		const hexArr = [];
+		for(let i = 0; i < hex.length; i += 2) {
+			hexArr.push(hex.slice(i, i + 2));
+		}
+
+		return hexArr.reverse().join('');
 	}
 };
 

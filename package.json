@@ -9,7 +9,7 @@
   "author": "DanoR",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^6.0.1"
+    "eslint": "^6.7.2"
   },
   "dependencies": {
     "axios": "^0.19.0",

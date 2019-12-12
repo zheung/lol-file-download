@@ -1,3 +1,5 @@
+const Biffer = require('../../util/Biffer');
+
 module.exports = function HIRC(type, id) {
 	if(!(this instanceof HIRC)) {
 		return new HIRC(...arguments);
@@ -7,12 +9,29 @@ module.exports = function HIRC(type, id) {
 	this.id = id;
 
 	this.parse = function(B) {
-		try {
-			_fs.writeFileSync(`./HIRC/${type}@${id}@${id.toString(16).toUpperCase()}.hirc`, B.buffer);
-		} catch(error) { true; }
+		// Sound
+		if(type == 2) {
+			const [embedType, audioID, sourceID] = B.unpack('xxxxBLL');
 
+			this.embedType = embedType;
+			this.audioID = audioID;
+			this.sourceID = sourceID;
+
+			if(embedType == 0) {
+				const [fileIndex, fileLength] = B.unpack('LL');
+
+				this.fileIndex = fileIndex;
+				this.fileLength = fileLength;
+			}
+
+			const [soundType] = B.unpack('L');
+
+			this.soundType = soundType;
+
+			// Unused Sound structure;
+		}
 		// Even Action
-		if(type == 3) {
+		else if(type == 3) {
 			const [scope, actionType, hircID, paramCount] = B.unpack('BBLxB');
 
 			this.scope = scope;
@@ -22,6 +41,7 @@ module.exports = function HIRC(type, id) {
 			if(paramCount) {
 				// Unused Struct
 				this.paramTypes = B.unpack(`${paramCount}B`);
+				this.params = B.unpack(`${paramCount}L`);
 
 				L('Unused Even Action Param', actionType, paramCount);
 			}
@@ -39,6 +59,16 @@ module.exports = function HIRC(type, id) {
 
 			if(count) {
 				this.eActions = B.unpack(`${count}L`);
+			}
+		}
+		// Pool
+		else if(type == 5) {
+			const b = Biffer(Buffer.from([...B.buffer].reverse()));
+
+			this.soundIDs = [];
+
+			while(b.unpack('>L')[0] == 0xC350) {
+				this.soundIDs.push(b.unpack('>L')[0]);
 			}
 		}
 

@@ -1,11 +1,10 @@
 {
 	"env": {
 		"node": true,
-		"es6": true
+		"es2020": true
 	},
 	"extends": "eslint:recommended",
 	"parserOptions": {
-		"ecmaVersion": 9,
 		"sourceType": "script"
 	},
 	"rules": {
