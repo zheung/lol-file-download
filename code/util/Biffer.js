@@ -18,6 +18,7 @@ module.exports = function Biffer(raw) {
 	}
 
 	this.pos = 0;
+	this.length = this.buffer.length;
 
 	this.unpack = function(format) {
 		let result = Struct.unpack(format, this.buffer, this.pos);
@@ -35,6 +36,9 @@ module.exports = function Biffer(raw) {
 
 		return this.buffer.slice(start, this.pos);
 	};
+	this.sub = function(length) {
+		return Biffer(this.raw(length));
+	};
 	this.seek = function(position) {
 		this.pos = position;
 	};
@@ -48,5 +52,8 @@ module.exports = function Biffer(raw) {
 		let result = this.raw(length);
 
 		return String(result);
+	};
+	this.isEnd = function() {
+		return this.pos >= this.buffer.length;
 	};
 };

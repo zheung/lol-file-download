@@ -4,3 +4,5 @@ assets/sounds/wwise2016/vo/zh_cn/characters/pyke/skins/base/pyke_base_vo_events.
 assets/sounds/wwise2016/vo/zh_cn/characters/pyke/skins/skin01/pyke_skin01_vo_audio.bnk
 assets/sounds/wwise2016/vo/zh_cn/characters/pyke/skins/skin01/pyke_skin01_vo_audio.wpk
 assets/sounds/wwise2016/vo/zh_cn/characters/pyke/skins/skin01/pyke_skin01_vo_events.bnk
+data/menu/fontconfig_zh_cn.txt
+data/menu/fontconfig_en_us.txt
